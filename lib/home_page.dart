@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/domain/model/gender_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,6 +11,23 @@ class _HomePageState extends State<HomePage> {
   double currentValue = 300;
   double weightCount = 60;
   double ageCount = 40;
+
+  List<GenderDataModel> genderDataModel = List();
+
+  void fillDataToList() {
+    genderDataModel.add(GenderDataModel(
+        isSelected: false, label: "MALE", image: 'assets/icons/male.svg'));
+    genderDataModel.add(GenderDataModel(
+        isSelected: false, label: "FEMALE", image: 'assets/icons/female.svg'));
+  }
+
+  @override
+  void initState() {
+    // fill data gender to list genderDataModel
+    fillDataToList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         title: Text("BMI CALCULATOR"),
         backgroundColor: Color(0xff12163A),
       ),
-       body: Container(
+      body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -27,68 +45,43 @@ class _HomePageState extends State<HomePage> {
               height: 150,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Container(
-                        alignment: Alignment.center,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Color(0xff272A4D),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            //SvgPicture.asset(assetName)
-                            SvgPicture.asset(
-                              "assets/icons/male.svg",
-                              height: 80,
+                children: genderDataModel.map(
+                  (gender) {
+                    return Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          print(gender.label + " diklik");
+                        },
+                                              child: Container(
+                            alignment: Alignment.center,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Color(0xff272A4D),
+                              borderRadius: BorderRadius.circular(6),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "MALE",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Container(
-                        alignment: Alignment.center,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Color(0xff272A4D),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/female.svg",
-                              height: 80,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "FEMALE",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )),
-                  ),
-                ],
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  gender.image,
+                                  height: 80,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  gender.label,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )),
+                      ),
+                    );
+                  },
+                ).toList(),
               ),
             ),
             Container(
