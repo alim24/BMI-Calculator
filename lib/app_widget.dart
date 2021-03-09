@@ -7,7 +7,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demijijio',
+      title: 'Flutter Demijijiao',
       theme: ThemeData(),
       home: HomePage(),
       debugShowCheckedModeBanner: true,
